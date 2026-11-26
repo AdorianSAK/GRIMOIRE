@@ -119,3 +119,95 @@ Modifying an instance must never unintentionally modify its source definition.
 Exporting an instance creates a new Collection definition, preserving its provenance while allowing the GM to decide which instance properties should be included.
 
 Deleting a Game must not delete or modify its Collections.
+
+#### Multiple Collection Libraries
+
+GRIMOIRE should eventually support multiple independent Collection libraries.
+
+This will allow users to organize and maintain different RPG systems, homebrew content, personal creations, and third-party content packs independently.
+
+Examples:
+
+- D&D 5e
+- Pathfinder
+- Homebrew
+- Personal Collections
+- Third-party content packs
+
+Multiple libraries should be able to coexist without unintentionally modifying or conflicting with one another.
+
+This functionality is planned for a future implementation milestone.
+
+## Definitions and Instances
+
+GRIMOIRE distinguishes between reusable definitions and independent instances.
+
+### Definitions
+
+A Definition is a reusable blueprint stored in a Collection.
+
+Examples include:
+- A Goblin definition in the Bestiary.
+- An Iron Sword definition in the Item Collection.
+- A character definition in the Character Collection.
+- A Skeleton Squad definition in the Troop Collection.
+
+Definitions describe the properties and capabilities of something before it is introduced into a Game.
+
+### Instances
+
+An Instance is an independent entity created from a Definition and stored within a specific Game.
+
+When a Definition is instantiated, GRIMOIRE creates an independent snapshot of its properties.
+
+Changes made to the original Definition must not automatically affect existing Instances. Likewise, modifying an Instance must never unintentionally modify its source Definition.
+
+Each Instance belongs to its Game and maintains its own identity and state.
+
+Examples:
+- Goblin_A and Goblin_B can originate from the same Goblin definition.
+- Each Goblin has independent HP, initiative, conditions, inventory, and other properties.
+- Albor's Iron Sword can have different properties from another Iron Sword instance, such as enchantments, durability, or ownership.
+
+### Cloning Definitions
+
+Definitions can be cloned to create new, independent Definitions.
+
+Cloning must:
+- Create a new unique identity.
+- Copy the source Definition's properties.
+- Preserve information about the source Definition.
+- Allow unrestricted modification of the new Definition.
+- Avoid maintaining a live dependency on the original.
+
+A cloned Definition is independent. Future changes to its source must not propagate into it.
+
+Cloning a clone is also permitted.
+
+### Instance Modification
+
+Instances are not restricted to temporary gameplay changes.
+
+The GM may permanently modify an Instance's properties during a Game. These modifications belong exclusively to that Instance.
+
+For example, a Goblin might acquire new abilities, mutations, equipment, or permanent stat changes. Its original Bestiary Definition remains untouched.
+
+### Exporting Instances
+
+An Instance can be exported into a Collection as a new Definition.
+
+The GM decides which properties should be included in the exported Definition.
+
+Temporary gameplay state and Game-specific information should not be included automatically. For example, current HP, temporary conditions, carried currency, and individual inventory contents should be treated separately from reusable defining properties.
+
+Exporting an Instance must never modify or remove the original Instance.
+
+### Identity and Provenance
+
+Every Definition and Instance must have a unique internal identity independent of its display name.
+
+Display names are intended for human interaction and may be changed or reused. Internal identities ensure that renaming an entity does not break its references or historical records.
+
+GRIMOIRE should also preserve provenance: information describing where an entity originated and how it was created or modified.
+
+Provenance is historical information, not a live inheritance relationship.
