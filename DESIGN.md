@@ -293,3 +293,118 @@ They share common lifecycle requirements, including:
 - Removal and restoration through the Game's Trash system.
 
 Their specialized properties and operations remain distinct.
+
+## Future System: Crafting
+
+GRIMOIRE should eventually support a crafting system that allows Actors to produce Objects using reusable recipes stored in Collections.
+
+This system is planned for a future implementation milestone.
+
+### Crafting Libraries and Recipes
+
+Recipes are stored in dedicated Collection libraries.
+
+Examples of libraries:
+- Potions
+- Forge
+- Cook
+- Paint
+
+Examples of recipes:
+- Minor Potion.
+- Iron Dagger.
+- Cake.
+- Simple Potion.
+
+A recipe describes:
+- Required materials and quantities.
+- Required tools or facilities, when applicable.
+- Default properties of the resulting Object.
+- Crafting duration, if applicable.
+- Optional skill checks or other requirements.
+
+### Crafting Operations
+
+Crafting is initiated through the `craft` command.
+
+Proposed syntax:
+
+`craft <library> <recipe> <character> [options]`
+
+GRIMOIRE checks whether the Actor meets the recipe requirements and possesses the required materials.
+
+When an operation successfully starts, its required materials are consumed and committed to that operation.
+
+A Crafting Operation is an independent Game entity. It records:
+- Unique operation identity.
+- Recipe used.
+- Actor performing the crafting.
+- Consumed materials.
+- Current status.
+- Resulting Object, when completed.
+
+Crafting may complete immediately or remain pending when time is required.
+
+### Crafting Lifecycle
+
+The proposed command structure includes:
+
+**Start crafting**
+
+`craft potions minor Sidabras s`
+
+Example response:
+
+`Crafting potions minor from Sidabras on standby as cs01.`
+
+**List pending operations**
+
+`craft standing`
+
+Displays crafting operations currently awaiting completion.
+
+**Complete crafting**
+
+`craft end cs01`
+
+Completes the operation and creates the resulting Object Instance using the recipe's default properties.
+
+**Complete with customization**
+
+`craft end cs01 c`
+
+Completes the operation and opens the resulting Object Instance in edit mode.
+
+This allows the GM to customize the result before accepting it into the Game.
+
+For example, a particularly successful crafting roll might justify increasing the healing capacity of a potion.
+
+Customization affects only the resulting Instance, never the original recipe.
+
+**Fail crafting**
+
+`craft fail cs01`
+
+Marks the operation as failed.
+
+Consumed materials are not automatically returned. Refunds, alternative results, and other consequences may eventually be configurable through recipes or rules.
+
+### Separation of Responsibilities
+
+The crafting system must distinguish three separate concepts:
+
+- **Recipe:** Defines what can be crafted, its requirements, and its default result.
+- **Crafting Operation:** Tracks an individual attempt to produce something.
+- **Resulting Instance:** Represents the actual Object produced by the operation.
+
+This separation allows multiple Actors to use the same recipe independently and permits multiple simultaneous crafting operations.
+
+### Design Principles
+
+- Crafting must use existing Inventory and Object systems.
+- Required materials must be consumed when crafting successfully enters its pending state.
+- Materials committed to one operation cannot be reused by another.
+- Failed operations must not accidentally create their intended results.
+- Customization must never modify the original recipe.
+- Pending operations must belong to their respective Games.
+- Crafting operations and their outcomes should be recorded in Game History.
