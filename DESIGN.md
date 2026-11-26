@@ -211,3 +211,85 @@ Display names are intended for human interaction and may be changed or reused. I
 GRIMOIRE should also preserve provenance: information describing where an entity originated and how it was created or modified.
 
 Provenance is historical information, not a live inheritance relationship.
+
+## Actors and Objects
+
+GRIMOIRE organizes Game entities into two broad families: Actors and Objects.
+
+Both originate from Definitions stored in Collections and become independent Instances when introduced into a Game.
+
+### Actors
+
+An Actor represents an entity capable of acting within the Game.
+
+Examples include:
+- Player characters.
+- Creatures and monsters.
+- NPCs.
+- Companions.
+- Summoned entities.
+
+Actors share a common foundation of properties and capabilities, such as:
+- Identity and descriptive information.
+- Attributes and statistics.
+- Hit points.
+- Conditions and status effects.
+- Inventory.
+- Resources and abilities.
+
+Not every Actor is a Player Character.
+
+A Player Character is a specialized Actor with additional character-related properties, such as class, level, experience, background, and progression.
+
+An Actor may acquire these additional properties without losing its original identity or characteristics. For example, a Goblin converted into a Player Character remains a Goblin while gaining the properties necessary to manage it as a character.
+
+The system should favor composition and optional capabilities over rigid inheritance between entity types.
+
+### Objects
+
+An Object represents an entity that can be possessed, manipulated, consumed, equipped, transferred, or otherwise interacted with.
+
+Examples include:
+- Weapons and armor.
+- Potions and consumables.
+- Food and ingredients.
+- Crafting materials.
+- Ammunition.
+- Quest items.
+- Miscellaneous equipment.
+
+Objects have properties appropriate to their purpose, such as weight, value, quantity, durability, effects, and equipment-related information.
+
+An Object Instance may also have properties that differ from its original Definition.
+
+For example, two Iron Sword Instances may share the same original Definition but have different durability, enchantments, or ownership.
+
+### Inventory and Object Ownership
+
+An Actor's inventory maintains references to the Objects it possesses.
+
+Physical item quantities must have a single source of truth. Inventory quantities must not be duplicated by independent resource counters.
+
+Objects may be:
+- Added to or removed from an inventory.
+- Transferred between Actors.
+- Equipped or unequipped.
+- Consumed.
+- Destroyed.
+
+Identical Objects may be represented as a quantity stack when their relevant properties and state are equivalent.
+
+Objects with different individual properties or states must be represented as separate Instances when necessary.
+
+### Shared Instance Management
+
+Actors and Objects are both Game-specific Instances.
+
+They share common lifecycle requirements, including:
+- Unique internal identity.
+- Provenance.
+- Modification.
+- History tracking.
+- Removal and restoration through the Game's Trash system.
+
+Their specialized properties and operations remain distinct.
