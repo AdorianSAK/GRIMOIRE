@@ -408,3 +408,77 @@ This separation allows multiple Actors to use the same recipe independently and 
 - Customization must never modify the original recipe.
 - Pending operations must belong to their respective Games.
 - Crafting operations and their outcomes should be recorded in Game History.
+
+## Actor Capabilities and Conversion
+
+Actors share a common foundation but may possess different capabilities depending on how they are used within a Game.
+
+GRIMOIRE should favor composition and optional capabilities over rigid inheritance between Actor types.
+
+### Shared Actor Foundation
+
+Every Actor has a common set of properties and behaviors.
+
+These may include:
+- Identity and descriptive information.
+- Attributes and statistics.
+- Hit points.
+- Conditions and status effects.
+- Abilities.
+- Inventory.
+- Resources.
+- History and provenance.
+
+Not every Actor needs to use every available capability.
+
+### Optional Capabilities
+
+An Actor may possess additional capabilities that enable specialized management.
+
+For example, Character capabilities provide the properties needed to manage an Actor as a Player Character.
+
+These may include:
+- Class and subclass.
+- Level and experience.
+- Background.
+- Proficiency.
+- Character progression.
+
+Other capabilities may be introduced in the future without requiring changes to the fundamental Actor structure.
+
+### Actor Conversion
+
+An existing Actor may acquire additional capabilities through conversion.
+
+Proposed command:
+
+`actor convert <actor>`
+
+Conversion adds the necessary properties and structures without replacing existing information.
+
+For example, converting a Goblin into a Player Character makes Character capabilities available while preserving its original identity and properties.
+
+Unassigned properties remain empty or use appropriate default values.
+
+Conversion must not automatically assign a class, level, background, or other character progression choices.
+
+### Capability and Classification
+
+GRIMOIRE must distinguish between an Actor's classification and its capabilities.
+
+- **Classification** describes what the Actor is.
+- **Capabilities** describe how the Actor can be managed and what additional functionality is available to it.
+
+An Actor may retain its original classification while acquiring additional capabilities.
+
+For example, a Goblin converted into a Player Character remains classified as a Goblin.
+
+This distinction prevents conversion from unintentionally changing an Actor's identity.
+
+### Preservation and Reversibility
+
+Adding capabilities must never erase or invalidate existing Actor properties.
+
+Conversion should be non-destructive.
+
+If capability removal is introduced in the future, it must account for any data or dependencies created while that capability was active. Removing a capability must not silently destroy unrelated Actor information.
