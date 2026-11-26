@@ -60,3 +60,62 @@ Failed operations must not leave partially modified entities, inventories, resou
 ### 2.8 Extensibility
 
 GRIMOIRE should support different RPG systems, custom rules, content collections, and future mechanics without requiring its fundamental architecture to be redesigned.
+
+## 3. System Architecture
+
+GRIMOIRE is organized around two independent environments: Collections and Games.
+
+### 3.1 Collections
+
+Collections are global repositories of reusable content. They exist independently of individual Games and provide the definitions and reference material used to populate them.
+
+Collections may contain:
+
+- Character definitions.
+- Creature definitions (Bestiary).
+- Item definitions.
+- Troop definitions.
+- Recipes and crafting definitions.
+- Rules and reference documentation.
+
+Definitions can be created, modified, cloned, imported, and exported.
+
+#### Cloning
+
+Cloning creates a new, independent definition based on an existing one.
+
+The cloned definition:
+- Receives its own unique identity.
+- Contains a complete copy of the source definition's properties.
+- Can be modified without affecting its source.
+- Retains provenance identifying its origin.
+
+There are no permanent inheritance dependencies between cloned definitions.
+
+### 3.2 Games
+
+A Game is an independent, persistent world state, comparable to a videogame save slot.
+
+Each Game manages its own:
+- Actor instances.
+- Object instances.
+- Encounters and combat state.
+- World information.
+- History.
+- Trash.
+
+Instances belong to their respective Games and cannot affect instances in other Games.
+
+Multiple Games may contain entities with identical display names. Internal identities must remain unique.
+
+### 3.3 Separation of Collections and Games
+
+Collections provide reusable definitions. Games contain independent instances created from those definitions.
+
+Using a definition to create an instance must never modify the original definition.
+
+Modifying an instance must never unintentionally modify its source definition.
+
+Exporting an instance creates a new Collection definition, preserving its provenance while allowing the GM to decide which instance properties should be included.
+
+Deleting a Game must not delete or modify its Collections.
